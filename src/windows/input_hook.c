@@ -164,7 +164,7 @@ void unregister_running_hooks() {
 
 void hook_start_proc() {
 	// Get the local system time in UNIX epoch form.
-	uint64_t timestamp = GetMessageTime();
+	uint64_t timestamp = GetTickCount64();
 
 	// Populate the hook start event.
 	event.time = timestamp;
@@ -179,7 +179,7 @@ void hook_start_proc() {
 
 void hook_stop_proc() {
 	// Get the local system time in UNIX epoch form.
-	uint64_t timestamp = GetMessageTime();
+	uint64_t timestamp = GetTickCount64();
 
 	// Populate the hook stop event.
 	event.time = timestamp;
@@ -317,7 +317,7 @@ LRESULT CALLBACK keyboard_hook_event_proc(int nCode, WPARAM wParam, LPARAM lPara
 
 
 static void process_button_pressed(MSLLHOOKSTRUCT *mshook, uint16_t button) {
-	uint64_t timestamp = GetMessageTime();
+	uint64_t timestamp = GetTickCount64();
 
 	// Track the number of clicks, the button must match the previous button.
 	if (button == click_button && (long int) (timestamp - click_time) <= hook_get_multi_click_time()) {
@@ -417,7 +417,7 @@ static void process_button_released(MSLLHOOKSTRUCT *mshook, uint16_t button) {
 }
 
 static void process_mouse_moved(MSLLHOOKSTRUCT *mshook) {
-	uint64_t timestamp = GetMessageTime();
+	uint64_t timestamp = GetTickCount64();
 
 	// We received a mouse move event with the mouse actually moving.
 	// This verifies that the mouse was moved after being depressed.
