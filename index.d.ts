@@ -13,6 +13,9 @@ declare module "libuiohook-node" {
         mousemove = "mousemove",
         mousedrag = "mousedrag",
         mousewheel = "mousewheel",
+
+        foreground_changed = "foreground_changed",
+        foreground_changed_location = "foreground_changed_location",
     }
 
     export class IOHook extends EventEmitter {
@@ -37,6 +40,9 @@ declare namespace LibUIOHookNode {
         mousemove = "mousemove",
         mousedrag = "mousedrag",
         mousewheel = "mousewheel",
+
+        foreground_changed = "foreground_changed",
+        foreground_changed_location = "foreground_changed_location",
     }
 
     export interface INativeEventMouse {
@@ -68,6 +74,7 @@ declare namespace LibUIOHookNode {
         mouse?: INativeEventMouse;
         keyboard?: INativeEventKeyboard;
         wheel?: INativeEventWheel;
+        bounds?: IRect;
     }
 
     export interface IHookEvent {
@@ -92,5 +99,14 @@ declare namespace LibUIOHookNode {
         isCtrlPressed?: boolean;
         isMetaPressed?: boolean;
         isAltPressed?: boolean;
+
+        bounds?: IRect;
+    }
+
+    interface IRect {
+        x: number;
+        y: number;
+        width: number;
+        height: number;
     }
 }

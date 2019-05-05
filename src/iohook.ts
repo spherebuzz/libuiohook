@@ -24,6 +24,8 @@ function initEvents() {
     EVENTS.set(9, Events.mousemove);
     EVENTS.set(10, Events.mousedrag);
     EVENTS.set(11, Events.mousewheel);
+    EVENTS.set(12, Events.foreground_changed);
+    EVENTS.set(13, Events.foreground_changed_location);
 }
 
 
@@ -83,7 +85,13 @@ export class IOHook extends EventEmitter {
             mask: nativeEvent.mask,
         };
 
-        event = Object.assign({}, event, nativeEvent.mouse || nativeEvent.keyboard || nativeEvent.wheel);
+        if (nativeEvent.type >= 12 && nativeEvent.type <= 13 ) { // 12-13 - foreground window events
+            event.bounds = nativeEvent.bounds;
+        }
+        else {
+            event = Object.assign({}, event, nativeEvent.mouse || nativeEvent.keyboard || nativeEvent.wheel);
+        }
+
 
         this._decorateEventWithModifiers(event);
 

@@ -74,7 +74,10 @@ typedef enum _event_type {
 	EVENT_MOUSE_RELEASED,
 	EVENT_MOUSE_MOVED,
 	EVENT_MOUSE_DRAGGED,
-	EVENT_MOUSE_WHEEL
+	EVENT_MOUSE_WHEEL,
+
+	EVENT_FOREGROUND_CHANGED,
+	EVENT_FOREGROUND_LOCATION_CHANGED
 } event_type;
 
 typedef struct _screen_data {
@@ -114,6 +117,13 @@ typedef struct _mouse_wheel_event_data {
 	uint8_t direction;
 } mouse_wheel_event_data;
 
+typedef struct _foreground_window_event_data {
+	int16_t x;
+	int16_t y;
+	int16_t width;
+	int16_t height;
+} foreground_window_event_data;
+
 typedef struct _uiohook_event {
 	event_type type;
 	uint64_t time;
@@ -123,6 +133,7 @@ typedef struct _uiohook_event {
 		keyboard_event_data keyboard;
 		mouse_event_data mouse;
 		mouse_wheel_event_data wheel;
+		foreground_window_event_data window;
 	} data;
 } uiohook_event;
 
