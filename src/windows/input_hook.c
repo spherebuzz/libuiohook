@@ -44,6 +44,9 @@ static DWORD click_time = 0;
 static unsigned short int click_button = MOUSE_NOBUTTON;
 static POINT last_click;
 
+static DWORD last_key_pressed_time = 0;
+static DWORD last_key_released_time = 0;
+
 // Static event memory.
 static uiohook_event event;
 static uiohook_event window_event;
@@ -201,6 +204,13 @@ void hook_stop_proc() {
 }
 
 static void process_key_pressed(KBDLLHOOKSTRUCT *kbhook) {
+
+	if (last_key_pressed_time == kbhook->time) {
+		return;
+	}
+
+	last_key_pressed_time = kbhook->time;
+
 	// Check and setup modifiers.
 	if		(kbhook->vkCode == VK_LSHIFT)	{ set_modifier_mask(MASK_SHIFT_L);		}
 	else if (kbhook->vkCode == VK_RSHIFT)	{ set_modifier_mask(MASK_SHIFT_R);		}
@@ -260,6 +270,13 @@ static void process_key_pressed(KBDLLHOOKSTRUCT *kbhook) {
 }
 
 static void process_key_released(KBDLLHOOKSTRUCT *kbhook) {
+
+	if (last_key_released_time == kbhook->time) {
+		return;
+	}
+
+	last_key_released_time = kbhook->time;
+
 	// Check and setup modifiers.
 	if		(kbhook->vkCode == VK_LSHIFT)	{ unset_modifier_mask(MASK_SHIFT_L);		}
 	else if (kbhook->vkCode == VK_RSHIFT)	{ unset_modifier_mask(MASK_SHIFT_R);		}
